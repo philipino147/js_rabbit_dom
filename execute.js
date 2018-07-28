@@ -34,14 +34,50 @@ The output will be the time it takes to reach the 'domination' Population
 
 prompt.start();
 
-prompt.get(['maleRabbits','femaleRabbits','dominationPopulation'], function(err,result) {
-  debugger;
+const maleRabbits = {
+    name: 'male', //Required, the value provided to the prompt will be attached as a property of the 'result' object
+    description: 'Enter initial number of male rabbits',     // Prompt displayed to the user. If not supplied name will be used.
+    type: 'number',                 // Specify the type of input to expect.
+    message: 'ERROR: male value must be a number', // Warning message to display if validation fails.
+    required: true                        // If true, value entered must be non-empty.
+  }
+
+  const femaleRabbits = {
+    name: 'fem', //Required, the value provided to the prompt will be attached as a property of the 'result' object
+    description: 'Enter initial number of female rabbits',     // Prompt displayed to the user. If not supplied name will be used.
+    type: 'number',                 // Specify the type of input to expect.
+    message: 'ERROR: female value must be a number', // Warning message to display if validation fails.
+    required: true                        // If true, value entered must be non-empty.
+  }
+
+ const dominationPopulation = {
+    name: 'dom', //Required, the value provided to the prompt will be attached as a property of the 'result' object
+    description: 'Enter population to reach',     // Prompt displayed to the user. If not supplied name will be used.
+    type: 'number',                 // Specify the type of input to expect.
+    message: 'ERROR: population value must be a number', // Warning message to display if validation fails.
+    required: true                        // If true, value entered must be non-empty.
+  }
+
+prompt.get([maleRabbits,femaleRabbits,dominationPopulation], function(err,result) {
   if (err){
     console.log(err);
     return;
   }
+  if (!result.male){
+    console.log(maleRabbits.message);
+    return;
+  }
+  if(!result.fem){
+    console.log(femaleRabbits.message);
+    return;
+  }
+  if(!result.dom){
+    console.log(dominationPopulation.message);
+    return;
+  }
+  //console.log(JSON.stringify(result, null,2));
   console.log('Command line input received.');
-  findMonth(result.maleRabbits,result.femaleRabbits,result.dominationPopulation);
+  findMonth(result.male,result.fem,result.dom);
 
   console.log('Thanks for using our tool!');
 
