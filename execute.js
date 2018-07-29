@@ -32,8 +32,6 @@ The output will be the time it takes to reach the 'domination' Population
 
 `);
 
-prompt.start();
-
 const maleRabbits = {
     name: 'male', //Required, the value provided to the prompt will be attached as a property of the 'result' object
     description: 'Enter initial number of male rabbits',     // Prompt displayed to the user. If not supplied name will be used.
@@ -57,26 +55,34 @@ const maleRabbits = {
     message: 'ERROR: population value must be a number', // Warning message to display if validation fails.
     required: true                        // If true, value entered must be non-empty.
   }
+prompt.start();
 
 prompt.get([maleRabbits,femaleRabbits,dominationPopulation], function(err,result) {
   if (err){
     console.log(err);
     return;
   }
+  result.male = Number(result.male);
   if (!result.male){
     console.log(maleRabbits.message);
     return;
   }
+
+  result.fem = Number(result.fem);
   if(!result.fem){
     console.log(femaleRabbits.message);
     return;
   }
+  result.dom = Number(result.dom);
   if(!result.dom){
     console.log(dominationPopulation.message);
     return;
   }
   //console.log(JSON.stringify(result, null,2));
   console.log('Command line input received.');
+    console.log(`Initial Males: ${result.male}`);
+    console.log(`Initial Females: ${result.fem}`);
+    console.log(`Domination Population: ${result.dom}`);
   findMonth(result.male,result.fem,result.dom);
 
   console.log('Thanks for using our tool!');
